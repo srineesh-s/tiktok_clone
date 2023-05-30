@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/screens/tiktok_screen/widgets/actions_bar.dart';
+import 'package:tiktok_clone/screens/tiktok_screen/widgets/playlist_widget.dart';
 import 'package:tiktok_clone/screens/tiktok_screen/widgets/tutorial_description.dart';
 
 class TikTokScreen extends StatelessWidget {
@@ -81,44 +82,24 @@ class TikTokScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      appBar: AppBar(flexibleSpace: topSection, backgroundColor: Colors.black),
       body: Container(
         decoration: const BoxDecoration(
           color: Color.fromRGBO(0, 37, 51, 1),
         ),
-        child: Column(
-          children: <Widget>[
-            // Top section
-            topSection,
-
-            // Middle expanded
-            middleSection,
-
-            // Bottom Section
-            // BottomToolbar(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(10),
-        color: Colors.black,
-        child: const Row(
-          children: [
-            Icon(
-              Icons.play_arrow_outlined,
-              color: Colors.white,
-            ),
-            Text(
-              "Playlist.Unit 5:Period 5:1844-1877",
-              style: TextStyle(color: Colors.white),
-            ),
-            Spacer(),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-              size: 13,
-            ),
-          ],
-        ),
+        child: PageView.builder(
+            itemCount: 5,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  middleSection,
+                  PlayListWidget(
+                    playlistData: "Unit 5:Period 5:1844-1877",
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }
