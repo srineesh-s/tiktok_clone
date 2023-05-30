@@ -16,9 +16,13 @@ class VideoDescription extends StatelessWidget {
           children: <Widget>[
             Text(
               'AP US History',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
-            Text('Topic 5.2: Manifest Destiny #apush5_1'),
+            Text(
+              'Topic 5.2: Manifest Destiny #apush5_1',
+              style: TextStyle(color: Colors.white),
+            ),
           ],
         ),
       ),

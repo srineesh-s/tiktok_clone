@@ -27,6 +27,7 @@ class ActionsToolbar extends StatelessWidget {
         _getSocialAction(icon: Icons.heart_broken, title: '3.2m'),
         _getSocialAction(icon: Icons.insert_comment, title: '16.4k'),
         _getSocialAction(icon: Icons.reply, title: 'Share', isShare: true),
+        _getSocialAction(icon: Icons.bookmark, title: 'Share', isShare: true),
         _getMusicPlayerAction()
       ]),
     );
