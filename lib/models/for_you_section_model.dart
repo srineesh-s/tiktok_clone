@@ -1,4 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:tiktok_clone/models/user_model.dart';
 
 import 'option_model.dart';
@@ -6,16 +9,16 @@ import 'option_model.dart';
 part 'for_you_section_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ForYouSectionModel {
-  String type;
-  int id;
-  String playlist;
-  String description;
-  String question;
-  List<OptionModel> options;
-  UserModel user;
+class ForYouSectionModel extends Equatable {
+  final String type;
+  final int id;
+  final String playlist;
+  final String description;
+  final String question;
+  final List<OptionModel> options;
+  final UserModel user;
 
-  ForYouSectionModel({
+  const ForYouSectionModel({
     required this.type,
     required this.id,
     required this.playlist,
@@ -28,4 +31,17 @@ class ForYouSectionModel {
   factory ForYouSectionModel.fromJson(Map<String, dynamic> json) =>
       _$ForYouSectionModelFromJson(json);
   Map<String, dynamic> toJson() => _$ForYouSectionModelToJson(this);
+
+  @override
+  List<Object> get props {
+    return [
+      type,
+      id,
+      playlist,
+      description,
+      question,
+      options,
+      user,
+    ];
+  }
 }

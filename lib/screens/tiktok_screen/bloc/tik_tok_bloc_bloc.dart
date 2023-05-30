@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/models/following_section_model.dart';
 import 'package:tiktok_clone/models/for_you_section_model.dart';
@@ -28,11 +29,6 @@ class TikTokBlocBloc extends Bloc<TikTokBlocEvent, TikTokBlocState> {
       } catch (e) {
         emit(ErrorState());
       }
-    });
-    on<AnswerSelectedEvent>((event, emit) async {
-      emit(LoadingState());
-
-      emit(ErrorState());
     });
   }
 

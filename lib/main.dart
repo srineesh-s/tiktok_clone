@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       create: (context) => TikTokBlocBloc(TikTokSectionRepository(ApiClient()))
         ..add(FollowingSectionEvent()),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'TikTok Study App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
