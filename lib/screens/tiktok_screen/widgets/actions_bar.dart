@@ -23,90 +23,61 @@ class ActionsToolbar extends StatelessWidget {
     return SizedBox(
       width: 100.0,
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        _getFollowAction(),
-        _getSocialAction(icon: Icons.heart_broken, title: '3.2m'),
-        _getSocialAction(icon: Icons.insert_comment, title: '16.4k'),
-        _getSocialAction(icon: Icons.reply, title: 'Share', isShare: true),
-        _getSocialAction(icon: Icons.bookmark, title: 'Share', isShare: true),
-        _getMusicPlayerAction()
+        _getScrollButtonAction(),
+        _getSocialAction(icon: Icons.heart_broken, title: '87'),
+        _getSocialAction(icon: Icons.insert_comment, title: '2'),
+        _getSocialAction(icon: Icons.reply, title: '17'),
+        _getSocialAction(icon: Icons.bookmark, title: '203'),
+        _getSocialAction(icon: Icons.flip_camera_android, title: 'Flip'),
+        const SizedBox(height: 15.0),
       ]),
     );
   }
 
-  Widget _getSocialAction(
-      {required String title, required IconData icon, bool isShare = false}) {
+  Widget _getSocialAction({required String title, required IconData icon}) {
     return Container(
-        margin: const EdgeInsets.only(top: 15.0),
-        width: 60.0,
-        height: 60.0,
+        margin: const EdgeInsets.only(top: 20.0),
         child: Column(children: [
-          Icon(icon, size: isShare ? 25.0 : 35.0, color: Colors.grey[300]),
+          Icon(icon, size: 35.0, color: Colors.grey[300]),
           Padding(
-            padding: EdgeInsets.only(top: isShare ? 5.0 : 2.0),
-            child:
-                Text(title, style: TextStyle(fontSize: isShare ? 10.0 : 12.0)),
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(title,
+                style: const TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.white,
+                )),
           )
         ]));
   }
 
-  Widget _getFollowAction() {
+  Widget _getScrollButtonAction() {
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         width: 60.0,
         height: 60.0,
-        child: Stack(children: [_getProfilePicture(), _getPlusIcon()]));
+        child: Stack(children: [
+          _getScrollPicture(),
+        ]));
   }
 
-  Widget _getPlusIcon() {
-    return Positioned(
-      bottom: 0,
-      left: ((actionWidgetSize / 2) - (plusIconSize / 2)),
-      child: Container(
-          width: plusIconSize, // plusIconSize = 20.0;
-          height: plusIconSize, // plusIconSize = 20.0;
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 255, 43, 84),
-              borderRadius: BorderRadius.circular(15.0)),
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 20.0,
-          )),
-    );
-  }
-
-  Widget _getProfilePicture() {
+  Widget _getScrollPicture() {
     return Positioned(
         left: (actionWidgetSize / 2) - (profileImageSize / 2),
         child: Container(
-          padding: const EdgeInsets.all(
-              1.0), // Add 1.0 point padding to create border
-          height: profileImageSize, // profileImageSize = 50.0;
-          width: profileImageSize, // profileImageSize = 50.0;
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(profileImageSize / 2)),
-          // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
-          child: const Text("image appears"),
-        ));
-  }
-
-  Widget _getMusicPlayerAction() {
-    return Container(
-        margin: const EdgeInsets.only(top: 10.0),
-        width: actionWidgetSize,
-        height: actionWidgetSize,
-        child: Column(children: [
-          Container(
-            padding: const EdgeInsets.all(11.0),
-            height: profileImageSize,
-            width: profileImageSize,
+            padding: const EdgeInsets.all(
+                1.0), // Add 1.0 point padding to create border
+            height: profileImageSize, // profileImageSize = 50.0;
+            width: profileImageSize, // profileImageSize = 50.0;
             decoration: BoxDecoration(
-                // gradient: musicGradient,
-                color: Colors.pink,
+                color: Colors.brown,
+                border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(profileImageSize / 2)),
-            child: const Text("Image appearts"),
-          ),
-        ]));
+            child: const Center(
+              child: Icon(
+                Icons.dashboard_customize_rounded,
+                color: Colors.yellow,
+                size: 32,
+              ),
+            )));
   }
 }
