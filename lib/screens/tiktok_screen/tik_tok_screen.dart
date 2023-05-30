@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:tiktok_clone/models/option_model.dart';
 import 'package:tiktok_clone/screens/tiktok_screen/bloc/tik_tok_bloc_bloc.dart';
 import 'package:tiktok_clone/screens/tiktok_screen/widgets/actions_bar.dart';
 import 'package:tiktok_clone/screens/tiktok_screen/widgets/playlist_widget.dart';
+import 'package:tiktok_clone/screens/tiktok_screen/widgets/top_bar_buttons.dart';
 import 'package:tiktok_clone/screens/tiktok_screen/widgets/tutorial_description.dart';
 
 class TikTokScreen extends StatelessWidget {
   const TikTokScreen({super.key});
 
-  Widget topSection(BuildContext context) => Container(
+  Widget topSection(BuildContext context, TikTokBlocState state) => Container(
         height: 100.0,
         padding: const EdgeInsets.only(bottom: 15.0, left: 10.0, right: 10.0),
         alignment: const Alignment(0.0, 1.0),
@@ -30,38 +33,7 @@ class TikTokScreen extends StatelessWidget {
                   )
                 ],
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      BlocProvider.of<TikTokBlocBloc>(context)
-                          .add(FollowingSectionEvent());
-                    },
-                    child: const Text(
-                      'Following',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  Container(
-                    width: 15.0,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      BlocProvider.of<TikTokBlocBloc>(context)
-                          .add(ForYouSectionEvent());
-                    },
-                    child: const Text('For you',
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        )),
-                  )
-                ],
-              ),
+              TopBarButtons(tikTokBlocState: state),
               const Icon(
                 Icons.search,
                 color: Colors.white,
@@ -69,7 +41,12 @@ class TikTokScreen extends StatelessWidget {
             ]),
       );
 
-  Widget middleSection(String title) => Expanded(
+  Widget middleSection(
+          {required String title,
+          required String name,
+          required String description,
+          required String imageUrl}) =>
+      Expanded(
           child: Stack(
         children: [
           Align(
@@ -81,12 +58,91 @@ class TikTokScreen extends StatelessWidget {
                   style: const TextStyle(color: Colors.white, fontSize: 25),
                 ),
               )),
-          const Align(
+          Align(
             alignment: Alignment.bottomCenter,
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[VideoDescription(), ActionsToolbar()]),
+                children: <Widget>[
+                  VideoDescription(
+                    name: name,
+                    description: description,
+                  ),
+                  ActionsToolbar(
+                    imageUrl: imageUrl,
+                  )
+                ]),
+          )
+        ],
+      ));
+  Widget middleSectionForYouSection(
+          {required String title,
+          required String name,
+          required String description,
+          required List<OptionModel> optionModels,
+          required String imageUrl}) =>
+      Expanded(
+          child: Stack(
+        children: [
+          Align(
+              alignment: Alignment.center,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 80, top: 160),
+                  child: Column(
+                    children: [
+                      Text(
+                        title,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                      ListView.builder(
+                          itemCount: optionModels.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.only(top: 28),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  optionModels[index].answer,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            );
+                          })
+                    ],
+                  ))),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  VideoDescription(
+                    name: name,
+                    description: description,
+                  ),
+                  ActionsToolbar(
+                    imageUrl: imageUrl,
+                  )
+                ]),
           )
         ],
       ));
@@ -98,32 +154,62 @@ class TikTokScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-              flexibleSpace: topSection(context),
+              flexibleSpace: topSection(context, state),
               backgroundColor: Colors.black),
           body: Container(
             decoration: const BoxDecoration(
               color: Color.fromRGBO(0, 37, 51, 1),
             ),
             child: PageView.builder(
-                itemCount: 5,
                 scrollDirection: Axis.vertical,
+                onPageChanged: (value) {
+                  if (state is FollowingSectionSuccessState) {
+                    BlocProvider.of<TikTokBlocBloc>(context)
+                        .add(FollowingSectionEvent());
+                  } else if (state is ForYouSectionSuccessState) {
+                    BlocProvider.of<TikTokBlocBloc>(context)
+                        .add(ForYouSectionEvent());
+                  } else {
+                    BlocProvider.of<TikTokBlocBloc>(context)
+                        .add(FollowingSectionEvent());
+                  }
+                },
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            BlocProvider.of<TikTokBlocBloc>(context)
-                                .add(FollowingSectionEvent());
-                          },
-                          child: const Text("testdddas")),
-                      if (state is FollowingSectionSuccessState)
+                  if (state is LoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is FollowingSectionSuccessState) {
+                    return Column(
+                      children: [
                         middleSection(
-                            state.followingSectionModel.flashCardFront),
-                      const PlayListWidget(
-                        playlistData: "Unit 5:Period 5:1844-1877",
-                      ),
-                    ],
-                  );
+                            title: state.followingSectionModel.flashCardFront,
+                            name: state.followingSectionModel.user.name,
+                            description:
+                                state.followingSectionModel.description,
+                            imageUrl: state.followingSectionModel.user.avatar),
+                        PlayListWidget(
+                          playlistData: state.followingSectionModel.playlist,
+                        ),
+                      ],
+                    );
+                  } else if (state is ForYouSectionSuccessState) {
+                    return Column(
+                      children: [
+                        middleSectionForYouSection(
+                            title: state.forYouSectionModel.question,
+                            name: state.forYouSectionModel.user.name,
+                            description: state.forYouSectionModel.description,
+                            optionModels: state.forYouSectionModel.options,
+                            imageUrl: state.forYouSectionModel.user.avatar),
+                        PlayListWidget(
+                          playlistData: state.forYouSectionModel.playlist,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const Center(child: Text("Something went wrong"));
+                  }
                 }),
           ),
         );

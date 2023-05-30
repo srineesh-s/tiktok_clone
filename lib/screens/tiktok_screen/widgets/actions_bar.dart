@@ -1,6 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class ActionsToolbar extends StatelessWidget {
+  const ActionsToolbar({
+    Key? key,
+    required this.imageUrl,
+  }) : super(key: key);
+
+  final String imageUrl;
+
   static const double actionWidgetSize = 60.0;
 
   static const double profileImageSize = 50.0;
@@ -8,8 +16,6 @@ class ActionsToolbar extends StatelessWidget {
   static const double socialButtonIconSize = 35.0;
 
   static const double specialIconSize = 32.0;
-
-  const ActionsToolbar({super.key});
 
   @override
   Widget build(BuildContext context) {
