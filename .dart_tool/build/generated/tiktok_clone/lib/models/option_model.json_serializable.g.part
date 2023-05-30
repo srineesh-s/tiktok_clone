@@ -1,0 +1,14 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+OptionModel _$OptionModelFromJson(Map<String, dynamic> json) => OptionModel(
+      id: json['id'] as String,
+      answer: json['answer'] as String,
+    );
+
+Map<String, dynamic> _$OptionModelToJson(OptionModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'answer': instance.answer,
+    };

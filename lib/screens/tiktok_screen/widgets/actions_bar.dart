@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ActionsToolbar extends StatelessWidget {
-  // Full dimensions of an action
   static const double actionWidgetSize = 60.0;
 
-// The size of the icon showen for Social Actions
-  static const double actionIconSize = 35.0;
-
-// The size of the share social icon
-  static const double shareActionIconSize = 25.0;
-
-// The size of the profile image in the follow Action
   static const double profileImageSize = 50.0;
 
-// The size of the plus icon under the profile image in follow action
-  static const double plusIconSize = 20.0;
+  static const double socialButtonIconSize = 35.0;
+
+  static const double specialIconSize = 32.0;
 
   const ActionsToolbar({super.key});
 
@@ -38,7 +31,7 @@ class ActionsToolbar extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.only(top: 20.0),
         child: Column(children: [
-          Icon(icon, size: 35.0, color: Colors.grey[300]),
+          Icon(icon, size: socialButtonIconSize, color: Colors.grey[300]),
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Text(title,
@@ -64,10 +57,9 @@ class ActionsToolbar extends StatelessWidget {
     return Positioned(
         left: (actionWidgetSize / 2) - (profileImageSize / 2),
         child: Container(
-            padding: const EdgeInsets.all(
-                1.0), // Add 1.0 point padding to create border
-            height: profileImageSize, // profileImageSize = 50.0;
-            width: profileImageSize, // profileImageSize = 50.0;
+            padding: const EdgeInsets.all(1.0),
+            height: profileImageSize,
+            width: profileImageSize,
             decoration: BoxDecoration(
                 color: Colors.brown,
                 border: Border.all(color: Colors.white),
@@ -76,7 +68,7 @@ class ActionsToolbar extends StatelessWidget {
               child: Icon(
                 Icons.dashboard_customize_rounded,
                 color: Colors.yellow,
-                size: 32,
+                size: specialIconSize,
               ),
             )));
   }
