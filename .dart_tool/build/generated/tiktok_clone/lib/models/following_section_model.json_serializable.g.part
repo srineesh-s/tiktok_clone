@@ -6,7 +6,7 @@ FollowingSectionModel _$FollowingSectionModelFromJson(
         Map<String, dynamic> json) =>
     FollowingSectionModel(
       type: json['type'] as String,
-      id: json['id'] as String,
+      id: const JsonStringToInt().fromJson(json['id']),
       playlist: json['playlist'] as String,
       description: json['description'] as String,
       flashCardFront: json['flashcard_front'] as String,
@@ -18,7 +18,7 @@ Map<String, dynamic> _$FollowingSectionModelToJson(
         FollowingSectionModel instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'id': instance.id,
+      'id': const JsonStringToInt().toJson(instance.id),
       'playlist': instance.playlist,
       'description': instance.description,
       'flashcard_front': instance.flashCardFront,

@@ -4,9 +4,10 @@ import 'package:tiktok_clone/models/user_model.dart';
 part 'following_section_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+@JsonStringToInt()
 class FollowingSectionModel {
   String type;
-  String id;
+  int id;
   String playlist;
   String description;
   @JsonKey(name: "flashcard_front")
@@ -28,4 +29,19 @@ class FollowingSectionModel {
   factory FollowingSectionModel.fromJson(Map<String, dynamic> json) =>
       _$FollowingSectionModelFromJson(json);
   Map<String, dynamic> toJson() => _$FollowingSectionModelToJson(this);
+}
+
+class JsonStringToInt implements JsonConverter<int, dynamic> {
+  const JsonStringToInt();
+
+  @override
+  int fromJson(dynamic json) {
+    if (json is num) {
+      return json.toInt();
+    }
+    return int.tryParse(json) ?? 0;
+  }
+
+  @override
+  String toJson(int object) => object.toString();
 }

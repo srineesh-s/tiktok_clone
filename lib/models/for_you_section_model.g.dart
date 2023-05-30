@@ -9,7 +9,7 @@ part of 'for_you_section_model.dart';
 ForYouSectionModel _$ForYouSectionModelFromJson(Map<String, dynamic> json) =>
     ForYouSectionModel(
       type: json['type'] as String,
-      id: json['id'] as String,
+      id: json['id'] as int,
       playlist: json['playlist'] as String,
       description: json['description'] as String,
       question: json['question'] as String,

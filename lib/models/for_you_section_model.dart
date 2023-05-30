@@ -8,7 +8,7 @@ part 'for_you_section_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ForYouSectionModel {
   String type;
-  String id;
+  int id;
   String playlist;
   String description;
   String question;
